@@ -1,0 +1,11 @@
+requests
+google-auth
+google-cloud-bigquery
+google-analytics-data
+pandas
+pyarrow
+db-dtypes
+python-dotenv
+PyYAML
+# IANA time zone database for zoneinfo on systems without one (Windows).
+tzdata

@@ -1,0 +1,32 @@
+name: Piwik PRO sessions -> BigQuery
+
+# Manual runs only. Add a `schedule:` trigger to run nightly.
+on:
+  workflow_dispatch:
+
+jobs:
+  load:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Load Piwik PRO sessions
+        env:
+          # Non-secret identifiers: repository variables override config.yaml.
+          GCP_PROJECT: ${{ vars.GCP_PROJECT }}
+          BQ_DATASET: ${{ vars.BQ_DATASET }}
+          PIWIK_HOST: ${{ vars.PIWIK_HOST }}
+          PIWIK_APP_ID: ${{ vars.PIWIK_APP_ID }}
+          PIWIK_TIMEZONE: ${{ vars.PIWIK_TIMEZONE }}
+          PIWIK_CLIENT_ID: ${{ secrets.PIWIK_CLIENT_ID }}
+          PIWIK_CLIENT_SECRET: ${{ secrets.PIWIK_CLIENT_SECRET }}
+          GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+        run: python -m pipelines.piwik_to_bigquery

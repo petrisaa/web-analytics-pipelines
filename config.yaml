@@ -1,0 +1,54 @@
+# Pipeline configuration.
+#
+# Every value here can be overridden with the environment variable named in the
+# comment next to it (env vars win). The values below are placeholders: replace
+# them with your own project, property and hosts before running anything.
+#
+# Secrets (API credentials, service account keys) never go in this file; they
+# come from environment variables only. See .env.example.
+
+gcp:
+  project: my-gcp-project            # GCP_PROJECT
+  location: EU                       # BQ_LOCATION
+
+bigquery:
+  dataset: web_analytics             # BQ_DATASET
+  tables:
+    ga4_sessions: ga4_sessions_daily     # GA4_SESSIONS_TABLE
+    ga4_campaigns: ga4_campaigns_daily   # GA4_CAMPAIGNS_TABLE
+    piwik_sessions: piwik_sessions       # PIWIK_TABLE
+
+# Timezone used for `loaded_date`. The freshness check compares loaded_date with
+# CURRENT_DATE() in this same zone, so keep the two in sync.
+reporting_timezone: Europe/Helsinki  # REPORTING_TIMEZONE
+
+sites:
+  # Public marketing site and the separate app/portal host where sign-up forms
+  # live. Used for documentation and by the sample data generator; the SQL
+  # files carry their own copies in their `params` CTE.
+  main_host: example.com             # MAIN_HOST
+  portal_host: app.example.com       # PORTAL_HOST
+
+ga4:
+  property_id: "123456789"           # GA4_PROPERTY_ID
+  # GA4 Data API accepts ISO dates or relative values ("yesterday", "30daysAgo").
+  # Relative values are resolved in the *property's* timezone, so "yesterday"
+  # always means the last complete day regardless of where the job runs.
+  # Every run re-fetches the whole window, so start it no earlier than the
+  # reports need: a longer window means more pages and more quota tokens.
+  date_from: "2024-01-01"            # GA4_DATE_FROM
+  date_to: yesterday                 # GA4_DATE_TO
+  # Retry a request when the GA4 Data API token quota is exhausted
+  # (429 ResourceExhausted). Hourly quotas refill, so waiting usually helps.
+  quota_retry_attempts: 4            # GA4_QUOTA_RETRY_ATTEMPTS
+  quota_retry_wait_seconds: 900      # GA4_QUOTA_RETRY_WAIT_SECONDS
+
+piwik:
+  host: your-account.example.com     # PIWIK_HOST (your Piwik PRO account host)
+  app_id: 00000000-0000-0000-0000-000000000000  # PIWIK_APP_ID
+  date_from: "2025-01-01"            # PIWIK_DATE_FROM
+  # Timezone the Piwik PRO app reports in. Either an IANA name or a fixed
+  # offset such as "+03:00". Check the app settings: an app configured with a
+  # fixed offset does NOT follow daylight saving time, and "yesterday" must be
+  # computed in the same zone the API uses to cut days.
+  timezone: UTC                      # PIWIK_TIMEZONE

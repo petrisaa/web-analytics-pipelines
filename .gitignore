@@ -1,0 +1,14 @@
+# Secrets
+.env
+# Service account keys and any other JSON credentials
+*.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Data: only the synthetic sample is versioned
+data/*
+!data/sample/

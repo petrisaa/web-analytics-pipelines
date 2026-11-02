@@ -124,7 +124,7 @@ flagged as unverified until it could be checked against ad platform click data.
 Conclusion: a single correction factor applied to GA4 totals would be wrong, 
 because the gap depends on how users arrive.
 
-### 3. A tag change silently broke the second tool for months
+### 3. A tag change silently broke the second tool
 
 In the cookieless tool, sessions were inflated several times over
 for a long period. The signal was a physically impossible ratio: 
@@ -134,7 +134,7 @@ broke the other. Because the error happened at collection,
 the history could not be repaired. I documented a “reliable 
 from” date and added sanity checks that would have caught it on day one.
 
-### 4. Customer lifetime value was overestimated about 2×
+### 4. Lifetime value assumptions need cohort data
 
 The original customer lifetime value was based on the average churn 
 of the whole customer base. Cohort analysis showed that new customers 
@@ -200,7 +200,7 @@ every new source gets sanity checks that do not depend on the code being
 correct ([sql/quality_checks.sql](sql/quality_checks.sql)).
 
 **Two measurement systems are not independent.** A tagging change made for
-one tool broke measurement in the other for weeks, and caused double counting
+one tool broke measurement in the other for a long period, and caused double counting
 in the first for two days. A change in one system can silently break another,
 and it shows only when someone puts both sets of numbers in the same table.
 

@@ -9,9 +9,11 @@ measurement systems, Google Analytics 4 (consent-based) and Piwik PRO
 cross-host sign-up funnel and keeps the whole thing honest with freshness and
 sanity checks.
 
-This is a portfolio version of a production project. All identifiers
-(projects, properties, hosts, event names) are placeholders, and the data in
-[data/sample/](data/sample/) is synthetic.
+This is a portfolio version of a production project, published with
+permission from the organisation where it was originally developed. All
+identifiers (projects, properties, hosts, event names) are placeholders,
+and the data in [data/sample/](data/sample/) is synthetic. No real member
+or customer data is included.
 
 ---
 
